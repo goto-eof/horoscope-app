@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:horoscope/dto/forecast_dto.dart';
 import 'package:horoscope/dto/sign_dto.dart';
 import 'package:horoscope/exception/service_exception.dart';
 import 'package:http/http.dart' as http;
@@ -23,6 +24,17 @@ class HoroscopeService {
     if (response.statusCode == 200) {
       final List<dynamic> decodedData = jsonDecode(response.body);
       return decodedData.map((signMap) => SignDTO.fromJson(signMap)).toList();
+    }
+    throw ServiceException(
+        "Invalid response status code: ${response.statusCode}");
+  }
+
+  Future<ForecastDTO> retrieveForecast(final String sign) async {
+    http.Response response =
+        await http.get(Uri.parse("$serviceBaseUri/sign/$sign"));
+    if (response.statusCode == 200) {
+      //final Map<String, dynamic> forecastMap = jsonDecode(response.body);
+      return ForecastDTO.fromString(sign, response.body);
     }
     throw ServiceException(
         "Invalid response status code: ${response.statusCode}");

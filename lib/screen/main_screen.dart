@@ -53,7 +53,7 @@ class _MainScreenState extends State<MainScreen> {
     }
     return Scaffold(
       appBar: AppBar(
-        actions: [],
+        actions: const [],
         title: const Text("Oroscopo"),
       ),
       body: GridView(
