@@ -33,8 +33,7 @@ class HoroscopeService {
     http.Response response =
         await http.get(Uri.parse("$serviceBaseUri/sign/$sign"));
     if (response.statusCode == 200) {
-      //final Map<String, dynamic> forecastMap = jsonDecode(response.body);
-      return ForecastDTO.fromString(sign, response.body);
+      return ForecastDTO.fromJson(jsonDecode(response.body));
     }
     throw ServiceException(
         "Invalid response status code: ${response.statusCode}");

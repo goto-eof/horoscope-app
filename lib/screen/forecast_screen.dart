@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:horoscope/dto/forecast_by_category.dart';
 import 'package:horoscope/dto/forecast_dto.dart';
 import 'package:horoscope/dto/sign_dto.dart';
 import 'package:horoscope/extension/string_extension.dart';
@@ -48,17 +49,32 @@ class _ForecastScreenState extends State<ForecastScreen> {
                   .copyWith(color: Colors.white),
             ),
             forecast != null
-                ? Text(
-                    forecast!.forecast,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium!
-                        .copyWith(color: Colors.white),
+                ? Column(
+                    children: [
+                      ...forecast!.forecasts
+                          .map((forecastByCategoryDTO) => ForecastByCategory(
+                              forecastByCategoryDTO: forecastByCategoryDTO))
+                          .toList()
+                    ],
                   )
-                : CircularProgressIndicator(),
+                : const CircularProgressIndicator(),
           ],
         ),
       ),
+    );
+  }
+}
+
+class ForecastByCategory extends StatelessWidget {
+  const ForecastByCategory({super.key, required this.forecastByCategoryDTO});
+  final ForecastByCategoryDTO forecastByCategoryDTO;
+  @override
+  Widget build(BuildContext context) {
+    final textStyle =
+        Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white);
+    return Text(
+      "${forecastByCategoryDTO.category}: ${forecastByCategoryDTO.forecast}(${forecastByCategoryDTO.rating})",
+      style: textStyle,
     );
   }
 }
