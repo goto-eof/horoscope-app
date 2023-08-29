@@ -34,19 +34,34 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    EdgeInsets edgeInsets =
+        const EdgeInsets.only(left: 50, right: 50, bottom: 50, top: 20);
+
+    SliverGridDelegateWithFixedCrossAxisCount gridDelegate =
+        const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4,
+            childAspectRatio: 3 / 2,
+            crossAxisSpacing: 20,
+            mainAxisSpacing: 20);
+
+    if (width <= 600) {
+      edgeInsets =
+          const EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 10);
+      gridDelegate = const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 3 / 2,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10);
+    }
     return Scaffold(
       appBar: AppBar(
         actions: [],
         title: const Text("Oroscopo"),
       ),
       body: GridView(
-        padding:
-            const EdgeInsets.only(left: 100, right: 100, bottom: 100, top: 20),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4,
-            childAspectRatio: 3 / 2,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20),
+        padding: edgeInsets,
+        gridDelegate: gridDelegate,
         children: [
           ...signs.map(
             (signDTO) => Sign(
