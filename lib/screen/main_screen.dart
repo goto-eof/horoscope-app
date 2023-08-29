@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:horoscope/dto/sign_dto.dart';
 import 'package:horoscope/screen/forecast_screen.dart';
 import 'package:horoscope/service/horoscope_service.dart';
+import 'package:horoscope/widget/app_drawer.dart';
 import 'package:horoscope/widget/sign.dart';
 
 class MainScreen extends StatefulWidget {
@@ -75,6 +76,7 @@ class _MainScreenState extends State<MainScreen> {
         actions: const [],
         title: const Text("Oroscopo"),
       ),
+      drawer: AppDrawer(),
       body: GridView(
         padding: edgeInsets,
         gridDelegate: gridDelegate,
