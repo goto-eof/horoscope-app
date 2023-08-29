@@ -23,10 +23,22 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Future<void> _populateSigns() async {
-    List<SignDTO> signsFromService = await horoscopeService.retrieveAllSigns();
-    setState(() {
-      signs = signsFromService;
-    });
+    try {
+      List<SignDTO> signsFromService =
+          await horoscopeService.retrieveAllSigns();
+      setState(() {
+        signs = signsFromService;
+      });
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+              "Failed to retrieve signs. Are you able to connect to internet?"),
+        ),
+      );
+    }
+
+    ;
   }
 
   @override

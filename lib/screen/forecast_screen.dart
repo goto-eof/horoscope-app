@@ -26,11 +26,20 @@ class _ForecastScreenState extends State<ForecastScreen> {
   }
 
   Future<void> _loadForecast() async {
-    ForecastDTO forecastResponse =
-        await horoscopeService.retrieveForecast(widget.signDTO.signName);
-    setState(() {
-      forecast = forecastResponse;
-    });
+    try {
+      ForecastDTO forecastResponse =
+          await horoscopeService.retrieveForecast(widget.signDTO.signName);
+      setState(() {
+        forecast = forecastResponse;
+      });
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+              "Failed to retrieve signs. Are you able to connect to internet?"),
+        ),
+      );
+    }
   }
 
   @override
