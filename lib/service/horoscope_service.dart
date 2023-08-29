@@ -4,11 +4,12 @@ import 'dart:io';
 import 'package:horoscope/dto/sign_dto.dart';
 import 'package:horoscope/exception/service_exception.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class HoroscopeService {
   static final HoroscopeService _instance = HoroscopeService._internal();
   final String serviceBaseUri =
-      "${Platform.isLinux ? "http://127.0.0.1" : "http://10.0.2.2"}:8080/horoscope";
+      "${kIsWeb || Platform.isLinux || Platform.isFuchsia || Platform.isMacOS || Platform.isWindows ? "http://127.0.0.1" : "http://10.0.2.2"}:8080/horoscope";
 
   HoroscopeService._internal();
 
