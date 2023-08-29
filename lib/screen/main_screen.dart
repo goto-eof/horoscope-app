@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:horoscope/dto/sign_dto.dart';
+import 'package:horoscope/screen/forecast_screen.dart';
 import 'package:horoscope/service/horoscope_service.dart';
 import 'package:horoscope/widget/sign.dart';
 
@@ -20,6 +21,12 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     _populateSigns();
+  }
+
+  void _viewForecast(SignDTO signDTO) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => ForecastScreen(signDTO: signDTO),
+    ));
   }
 
   Future<void> _populateSigns() async {
@@ -73,9 +80,7 @@ class _MainScreenState extends State<MainScreen> {
         gridDelegate: gridDelegate,
         children: [
           ...signs.map(
-            (signDTO) => Sign(
-              signDTO: signDTO,
-            ),
+            (signDTO) => Sign(signDTO: signDTO, viewForecast: _viewForecast),
           ),
         ],
       ),

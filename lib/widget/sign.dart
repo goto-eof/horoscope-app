@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:horoscope/dto/sign_dto.dart';
 import 'package:horoscope/extension/string_extension.dart';
-import 'package:horoscope/screen/forecast_screen.dart';
 
 class Sign extends StatefulWidget {
-  const Sign({super.key, required this.signDTO});
+  const Sign({super.key, required this.signDTO, required this.viewForecast});
   final SignDTO signDTO;
-
+  final Function viewForecast;
   @override
   State<StatefulWidget> createState() {
     return _SignState();
@@ -14,16 +13,12 @@ class Sign extends StatefulWidget {
 }
 
 class _SignState extends State<Sign> {
-  void _viewForecast() {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => ForecastScreen(signDTO: widget.signDTO),
-    ));
-  }
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: _viewForecast,
+      onTap: () {
+        widget.viewForecast(widget.signDTO);
+      },
       child: Container(
         decoration: BoxDecoration(
             border: Border.all(
