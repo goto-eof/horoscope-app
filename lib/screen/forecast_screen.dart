@@ -58,13 +58,19 @@ class _ForecastScreenState extends State<ForecastScreen> {
                   .copyWith(color: Colors.white),
             ),
             forecast != null
-                ? Column(
-                    children: [
-                      ...forecast!.forecasts
-                          .map((forecastByCategoryDTO) => ForecastByCategory(
-                              forecastByCategoryDTO: forecastByCategoryDTO))
-                          .toList()
-                    ],
+                ? Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ...forecast!.forecasts
+                            .map((forecastByCategoryDTO) => ForecastByCategory(
+                                forecastByCategoryDTO: forecastByCategoryDTO))
+                            .toList()
+                      ],
+                    ),
                   )
                 : const CircularProgressIndicator(),
           ],
@@ -81,9 +87,14 @@ class ForecastByCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     final textStyle =
         Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white);
-    return Text(
-      "${forecastByCategoryDTO.category}: ${forecastByCategoryDTO.forecast}(${forecastByCategoryDTO.rating})",
-      style: textStyle,
+    return Container(
+      width: double.infinity,
+      child: Card(
+        child: Text(
+          "${forecastByCategoryDTO.category}: ${forecastByCategoryDTO.forecast}(${forecastByCategoryDTO.rating})",
+          style: textStyle,
+        ),
+      ),
     );
   }
 }
